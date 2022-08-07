@@ -1,0 +1,16 @@
+version: "3.8"
+services:
+  web:
+    build:
+      context: .
+      dockerfile: "Dockerfile.dev"
+    # command: python -u splatoon2.py
+    # とりあえず適当にずっと動いていられるコマンドを仕込んだ状態
+    command: tail -f /dev/null
+    tty: true
+    stdin_open: true
+    volumes:
+      - .:/taiki-line-notify
+      - python-packages:/root/.local/share
+volumes:
+  python-packages:
