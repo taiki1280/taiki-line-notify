@@ -4,9 +4,10 @@ services:
     build:
       context: .
       dockerfile: "Dockerfile.dev"
-    # command: python -u splatoon2.py
     # とりあえず適当にずっと動いていられるコマンドを仕込んだ状態
-    command: tail -f /dev/null
+    # command: tail -f /dev/null
+    # 定期実行するプログラムを永遠に実行
+    command: python -u forever_run.py
     tty: true
     stdin_open: true
     volumes:
