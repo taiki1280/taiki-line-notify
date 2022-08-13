@@ -52,7 +52,7 @@ def create_msg_data(processing_data_list) -> str:
     return result
 
 
-if __name__ == '__main__':
+def main():
     stage_info_list = get_stage_info_list()
 
     if stage_info_list['status'] == 1:
@@ -78,3 +78,7 @@ if __name__ == '__main__':
     line_notify_obj.send_line_notify()
     # line_notify_obj.message = 'リーグマッチ\n' + league_stage_info
     # line_notify_obj.send_line_notify()
+
+
+if __name__ == '__main__':
+    main()
