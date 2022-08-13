@@ -27,6 +27,8 @@ RUN echo "if [[ -z \"\${VIRTUAL_ENV}\" ]]; then" >> /root/.bashrc && \
     echo "fi"                                    >> /root/.bashrc
 
 COPY scripts/ /opt/bin/
+RUN chmod +x /opt/bin/docker-setup.sh
+RUN chmod +x /opt/bin/docker-entrypoint.sh
 
 ENTRYPOINT [ \
     "prehook", "/opt/bin/docker-setup.sh", "--", \
