@@ -8,6 +8,8 @@ services:
     # command: tail -f /dev/null
     # 定期実行するプログラムを永遠に実行
     command: python -u forever_run.py
+    environment:
+      TZ: Asia/Tokyo
     tty: true
     stdin_open: true
     volumes:
