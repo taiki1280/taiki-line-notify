@@ -15,5 +15,6 @@ services:
     volumes:
       - .:/taiki-line-notify
       - python-packages:/root/.local/share
+    restart: always
 volumes:
   python-packages:
