@@ -1,14 +1,25 @@
 FROM python
 
-RUN apt-get update && \
-    apt-get install -y --no-install-recommends \
+ARG USERNAME=vscode
+ARG UID=1000
+ARG GID=${UID}
+RUN groupadd -g ${GID} ${USERNAME} \
+    && useradd -m -s /bin/bash -u ${UID} -g ${GID} ${USERNAME} \
+    && apt-get update \
+    && apt-get install -y --no-install-recommends \
+    sudo \
     build-essential \
     ca-certificates \
     git \
-    && apt-get clean && \
-    rm -rf /var/lib/apt/lists/*
+    && echo ${USERNAME} ALL=\(root\) NOPASSWD:ALL > /etc/sudoers.d/${USERNAME}\
+    && chmod 0440 /etc/sudoers.d/${USERNAME} \
+    && apt-get clean \
+    && rm -rf /var/lib/apt/lists/*
 
 ENV ENTRYKIT_VERSION 0.4.0
+ENV PIPENV_VENV_IN_PROJECT 1
+ENV PIPENV_IGNORE_VIRTUALENVS 1
+ENV PIPENV_VERBOSITY -1
 
 RUN wget https://github.com/progrium/entrykit/releases/download/v${ENTRYKIT_VERSION}/entrykit_${ENTRYKIT_VERSION}_Linux_x86_64.tgz \
     && tar -xvzf entrykit_${ENTRYKIT_VERSION}_Linux_x86_64.tgz \
@@ -17,18 +28,17 @@ RUN wget https://github.com/progrium/entrykit/releases/download/v${ENTRYKIT_VERS
     && chmod +x /bin/entrykit \
     && entrykit --symlink
 
-WORKDIR /taiki-line-notify
+WORKDIR /app
 
 RUN export WORKON_HOME=~/.venv
 RUN pip install --upgrade pip && pip install pipenv
 
-RUN echo "if [[ -z \"\${VIRTUAL_ENV}\" ]]; then" >> /root/.bashrc && \
-    echo "source \$(pipenv --venv)/bin/activate" >> /root/.bashrc && \
-    echo "fi"                                    >> /root/.bashrc
+RUN echo "if [[ -z \"\${VIRTUAL_ENV}\" ]]; then" >> ~/.bashrc && \
+    echo "source \$(pipenv --venv)/bin/activate" >> ~/.bashrc && \
+    echo "fi"                                    >> ~/.bashrc
 
 COPY scripts/ /opt/bin/
-RUN chmod +x /opt/bin/docker-setup.sh
-RUN chmod +x /opt/bin/docker-entrypoint.sh
+RUN chmod -R +x /opt/bin
 
 ENTRYPOINT [ \
     "prehook", "/opt/bin/docker-setup.sh", "--", \

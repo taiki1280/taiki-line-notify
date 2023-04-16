@@ -1,6 +1,6 @@
 version: "3.8"
 services:
-  web:
+  app:
     build:
       context: .
       dockerfile: "Dockerfile.dev"
@@ -13,7 +13,7 @@ services:
     tty: true
     stdin_open: true
     volumes:
-      - .:/taiki-line-notify
+      - .:/app
       - python-packages:/root/.local/share
     restart: always
 volumes:

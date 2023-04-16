@@ -10,6 +10,10 @@ class Linenotify:
         """
         LINE へ通知をする関数
         """
+        if config.LINE_NOTIFY_TOKEN == None:
+            print('環境変数「LINE_NOTIFY_TOKEN」を設定してください。')
+            print('\t例）「.env.exampale」をご参考にしてください。')
+            return
         API_URL = 'https://notify-api.line.me/api/notify'
         data = {'message': f'message: {self.message}'}
         headers = {'Authorization': f'Bearer {config.LINE_NOTIFY_TOKEN}'}
