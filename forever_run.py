@@ -13,7 +13,7 @@ def task():
 
 
 # 02 スケジュール登録
-schedule.every().days.at("12:00").do(task)
+schedule.every().day.at("12:00").do(task)
 # schedule.every(0.4).seconds.do(task)
 
 
