@@ -1,5 +1,5 @@
 from distutils.spawn import spawn
-import splatoon2
+import splatoon3
 
 # 00 ライブラリをインポート
 import schedule
@@ -9,7 +9,7 @@ from time import sleep
 # 01 定期実行する関数を準備
 def task():
     # print('aaa')
-    splatoon2.main()
+    splatoon3.main()
 
 
 # 02 スケジュール登録

@@ -57,7 +57,10 @@
 						"statusBar.foreground": "#ffffff"
 					}
 				},
-				"python.defaultInterpreterPath": "/app/.venv/bin/python"
+				"python.defaultInterpreterPath": "/app/.venv/bin/python",
+				"cSpell.ignoreWords": [
+					"Splatoon"
+				]
 			}
 		}
 	},
