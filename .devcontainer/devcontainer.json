@@ -1,0 +1,66 @@
+// For format details, see https://aka.ms/devcontainer.json. For config options, see the
+// README at: https://github.com/devcontainers/templates/tree/main/src/docker-existing-docker-compose
+{
+	"name": "line-notify-devcontainer",
+	// Update the 'dockerComposeFile' list if you have more compose files or use different names.
+	// The .devcontainer/docker-compose.yml file contains any overrides you need/want to make.
+	"dockerComposeFile": [
+		"../compose.yaml",
+		"docker-compose.yml"
+	],
+	// The 'service' property is the name of the service for the container that VS Code should
+	// use. Update this value and .devcontainer/docker-compose.yml to the real service name.
+	"service": "app",
+	// The optional 'workspaceFolder' property is the path VS Code should open by default when
+	// connected. This is typically a file mount in .devcontainer/docker-compose.yml
+	"workspaceFolder": "/workspaces/${localWorkspaceFolderBasename}",
+	"features": {
+		"ghcr.io/devcontainers/features/python:1": {
+			"installTools": true,
+			"version": "latest"
+		}
+	},
+	// Features to add to the dev container. More info: https://containers.dev/features.
+	// "features": {},
+	// Use 'forwardPorts' to make a list of ports inside the container available locally.
+	// "forwardPorts": [],
+	// Uncomment the next line if you want start specific services in your Docker Compose config.
+	// "runServices": [],
+	// Uncomment the next line if you want to keep your containers running after VS Code shuts down.
+	// "shutdownAction": "none",
+	// Uncomment the next line to run commands after the container is created.
+	// "postCreateCommand": "cat /etc/os-release",
+	// Configure tool-specific properties.
+	"customizations": {
+		"vscode": {
+			"extensions": [
+				"ms-python.python",
+				"ms-python.vscode-pylance",
+				"ms-python.isort",
+				"mhutchie.git-graph",
+				"humao.rest-client",
+				"Gruntfuggly.todo-tree",
+				"streetsidesoftware.code-spell-checker"
+			],
+			"settings": {
+				// "terminal.integrated.shell.linux": "/bin/zsh"
+				"files.autoSave": "afterDelay",
+				"editor.formatOnPaste": true,
+				"editor.tabSize": 4,
+				"workbench.colorCustomizations": {
+					"[Default Dark+]": {
+						// タイトルバーの背景色
+						"titleBar.activeBackground": "#0db7ed",
+						// タイトルバーの文字色
+						"titleBar.activeForeground": "#ffffff",
+						"statusBar.background": "#384d54",
+						"statusBar.foreground": "#ffffff"
+					}
+				},
+				"python.defaultInterpreterPath": "/app/.venv/bin/python"
+			}
+		}
+	},
+	// Uncomment to connect as an existing user other than the container default. More info: https://aka.ms/dev-containers-non-root.
+	"remoteUser": "vscode"
+}
