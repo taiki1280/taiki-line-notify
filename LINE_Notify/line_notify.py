@@ -23,3 +23,12 @@ class Linenotify:
             print(self.message)
         else:
             print('送信できなかったぞ？')
+
+        # discord へも webhook
+        data = {'content': self.message}
+        # taiki bot server > test
+        discord_webhook_url = 'https://discord.com/api/webhooks/1139981577854652456/GQJ0Q-nZQrBGuomagpG2zr1GyJOGS-U5zmHWarLEgPWZjXNxC0lqbFDqEusHBLLP0me6'
+        requests.post(discord_webhook_url, data=data)
+        # ゲーム > splatoon3-notify
+        discord_webhook_url = 'https://discord.com/api/webhooks/1139987969701314802/ERvkAUAWefxcukIWnUb9dsI9WPa75TVFJfgXPYmzITQ9dBYblux_P8hbjs5tFzJ0Gh_7'
+        requests.post(discord_webhook_url, data=data)
