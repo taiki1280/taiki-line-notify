@@ -20,7 +20,7 @@ def get_stage_info_list() -> dict:
         result_json['status'] = 0
         result_json['result'] = 'エラー'
 
-    return result_json
+    return response_json['result']['regular'][0]['is_fest'], result_json
 
 
 # データを加工する関数（不要データの削除）
@@ -30,8 +30,10 @@ def process_data(stage_info_list) -> dict:
         rule = stage_info['rule']['name']
         start_time = stage_info['start_time']
         end_time = stage_info['end_time']
-        start_time = dt.strptime(start_time, '%Y-%m-%dT%H:%M:%S%z').strftime('%H:%M')
-        end_time = dt.strptime(end_time, '%Y-%m-%dT%H:%M:%S%z').strftime('%H:%M')
+        start_time = dt.strptime(
+            start_time, '%Y-%m-%dT%H:%M:%S%z').strftime('%H:%M')
+        end_time = dt.strptime(
+            end_time, '%Y-%m-%dT%H:%M:%S%z').strftime('%H:%M')
         map1 = stage_info['stages'][0]['name']
         map2 = stage_info['stages'][1]['name']
         value = {
@@ -55,19 +57,27 @@ def create_msg_data(processing_data_list) -> str:
 
 
 def main():
-    stage_info_list = get_stage_info_list()
+    is_fest, stage_info_list = get_stage_info_list()
     line_notify_obj = Linenotify('')
+    message = ''
 
     if stage_info_list['status'] == 0:
         message = 'API 取得エラー'
     elif stage_info_list['status'] == 1:
-        x_stage_info = stage_info_list['result']['x']
+        x_stage_info = stage_info_list['result']['x'] or stage_info_list['result']['fest']
+
+        if is_fest:
+            message = '！！！！！！！！！！！フェス開催中！！！！！！！！！\n'
+        else:
+            message = 'Xマッチ\n'
+
         # regular_stage_info = stage_info_list['result']['regular']
         # league_stage_info = stage_info_list['result']['league']
 
         x_stage_info = process_data(x_stage_info)
         x_stage_info = create_msg_data(x_stage_info)
-        message = '\nXマッチ\n' + x_stage_info
+
+        message += x_stage_info
     line_notify_obj.message = message
     line_notify_obj.send_line_notify()
     # line_notify_obj.message = 'リーグマッチ\n' + league_stage_info
