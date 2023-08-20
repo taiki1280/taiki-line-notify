@@ -1,5 +1,6 @@
 from distutils.spawn import spawn
-import splatoon3
+from LINE_Notify.line_notify import Linenotify
+# import splatoon3
 
 # 00 ライブラリをインポート
 import schedule
@@ -8,8 +9,12 @@ from time import sleep
 
 # 01 定期実行する関数を準備
 def task():
-    # print('aaa')
-    splatoon3.main()
+    message = 'スプラ3 ステージ情報配信は止めました。'
+
+    line_notify_obj = Linenotify('')
+    line_notify_obj.message = message
+    line_notify_obj.send_line_notify()
+    # splatoon3.main()
 
 
 # 02 スケジュール登録

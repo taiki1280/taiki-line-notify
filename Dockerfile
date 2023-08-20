@@ -18,5 +18,3 @@ RUN pip install pipenv --no-cache-dir && \
     pip uninstall -y pipenv virtualenv-clone virtualenv
 
 COPY . $WORKDIR
-
-CMD ["python", "splatoon2.py"]
